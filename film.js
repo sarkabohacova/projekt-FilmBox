@@ -103,4 +103,182 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	{
+		id: 'zahrada',
+		nazev: 'Záhrada',
+		plakat: {
+			url: 'https://image.pmgstatic.com/cache/resized/w663/files/images/film/posters/164/948/164948627_2303ca.jpg',
+			sirka: 663,
+			vyska: 913,
+		},
+		ochutnavka: 'Křehká komedie o tajuplném životě v zahradě.',
+		popis:
+			'Poetická komedie, která v roce 1995 získala šest Českých lvů a stala se filmovou událostí roku, vypráví příběh třicátníka Jakuba, kterého zachycuje v momentě, kdy se na něj řítí jeden problém za druhým. Neumí vyřešit svůj vztah s vdanou Terezou, práce ho neuspokojuje, nerozumí si s otcem, s nímž žije ve společném bytě. Rozhodne se změnit svůj život a odchází na pár dní do dědečkova opuštěného domu na venkově. Netuší, že jeho pobyt na tajuplném místě se po setkání se záhadnou dívkou prodlouží... Film vyniká obrazovou malebností, jeho režisérem byl Martin Šulík a představitelem hlavní role Roman Luknár (momentálně hraje v seriálu ČT Neviditelní). Marián Labuda v roli otce byl za herecký výkon ve vedlejší roli oceněn Českým lvem.',
+		premiera: '2024-11-10',
+	}
 ]
+
+const filmID = location.hash.substring(1)
+
+let filmDetail
+filmy.forEach((film) => {
+  if (film.id === filmID) {
+    filmDetail = film
+  }
+})
+
+const filmDetailElement = document.querySelector('#detail-filmu')
+filmDetailElement.innerHTML = ``
+
+filmDetailElement.innerHTML += `
+  <div class="row g-0">
+					<div class="col-md-5">
+						<img
+							src="${filmDetail.plakat.url}"
+							alt="plakát"
+							class="img-fluid rounded-start"
+							width="663"
+							height="909"
+						/>
+					</div>
+					<div class="col-md-7">
+						<div class="card-body">
+							<h5 class="card-title">${filmDetail.nazev}</h5>
+							<p class="card-text">${filmDetail.popis}</p>
+							<p class="card-text">
+								<small class="text-muted" id="premiera"
+									>Premiéra <strong>24. prosince 2022</strong>, což je za 24
+									dní.</small
+								>
+							</p>
+							<h6>Hodnocení</h6>
+							<div class="stars">
+								<button
+									class="far fa-star button-star"
+									data-mdb-toggle="tooltip"
+									title="Nic moc"
+								>
+									1
+								</button>
+								<button
+									class="far fa-star button-star"
+									data-mdb-toggle="tooltip"
+									title="Ucházející"
+								>
+									2
+								</button>
+								<button
+									class="far fa-star button-star"
+									data-mdb-toggle="tooltip"
+									title="Dobrý"
+								>
+									3
+								</button>
+								<button
+									class="far fa-star button-star"
+									data-mdb-toggle="tooltip"
+									title="Skvělý"
+								>
+									4
+								</button>
+								<button
+									class="far fa-star button-star"
+									data-mdb-toggle="tooltip"
+									title="Úžasný"
+								>
+									5
+								</button>
+							</div>
+
+							<h6 class="mt-4">Poznámka</h6>
+							<form id="note-form">
+								<div class="row">
+									<div class="col-md-6 col-lg-7 col-xl-8 mb-2">
+										<div class="form-outline">
+											<textarea
+												class="form-control"
+												id="message-input"
+												rows="4"
+											></textarea>
+											<label class="form-label" for="message-input"
+												>Text poznámky</label
+											>
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-5 col-xl-4">
+										<div class="form-check d-flex justify-content-center mb-2">
+											<input
+												class="form-check-input me-2 mb-2"
+												type="checkbox"
+												value=""
+												id="terms-checkbox"
+											/>
+											<label class="form-check-label" for="terms-checkbox">
+												Souhlasím se všeobecnými podmínky užívání.
+											</label>
+										</div>
+										<button type="submit" class="btn btn-primary btn-block">
+											Uložit
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+  `
+
+// Premiéra
+
+const premiereDate = dayjs(filmDetail.premiera)
+const today = dayjs()
+const daysDifference = premiereDate.diff(today, 'days')
+
+let premiereText = ''
+
+if (daysDifference === 0) {
+  premiereText = 'dnes'
+} else if (daysDifference > 0) {
+  premiereText = `za ${daysDifference} dní`
+} else {
+  premiereText = `před ${Math.abs(daysDifference)} dny`
+}
+
+const premiereElement = document.querySelector("#premiera");
+premiereElement.innerHTML = `
+  Premiéra <strong>${premiereDate.format("DD. MM. YYYY")}</strong>, což je ${premiereText}.
+`
+
+// Hvězdičky
+
+const yellowStars = (num) => {
+  const stars = document.querySelectorAll(".fa-star")
+
+  stars.forEach((star, index) => {
+    if (index < num) {
+      star.classList.remove("far")
+      star.classList.add("fas")
+    } else {
+      star.classList.remove("fas")
+      star.classList.add("far")
+    }
+  });
+};
+
+let lastClickedStar = 0;
+const starButtons = document.querySelectorAll(".button-star")
+
+starButtons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    lastClickedStar = index + 1
+    yellowStars(lastClickedStar)
+  })
+
+  button.addEventListener("mouseenter", () => {
+    yellowStars(index + 1)
+  })
+
+  button.addEventListener("mouseleave", () => {
+    yellowStars(lastClickedStar)
+  })
+})

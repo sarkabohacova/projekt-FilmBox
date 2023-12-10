@@ -103,4 +103,41 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	{
+		id: 'zahrada',
+		nazev: 'Záhrada',
+		plakat: {
+			url: 'https://image.pmgstatic.com/cache/resized/w663/files/images/film/posters/164/948/164948627_2303ca.jpg',
+			sirka: 663,
+			vyska: 913,
+		},
+		ochutnavka: 'Křehká komedie o tajuplném životě v zahradě.',
+		popis:
+			'Poetická komedie, která v roce 1995 získala šest Českých lvů a stala se filmovou událostí roku, vypráví příběh třicátníka Jakuba, kterého zachycuje v momentě, kdy se na něj řítí jeden problém za druhým. Neumí vyřešit svůj vztah s vdanou Terezou, práce ho neuspokojuje, nerozumí si s otcem, s nímž žije ve společném bytě. Rozhodne se změnit svůj život a odchází na pár dní do dědečkova opuštěného domu na venkově. Netuší, že jeho pobyt na tajuplném místě se po setkání se záhadnou dívkou prodlouží... Film vyniká obrazovou malebností, jeho režisérem byl Martin Šulík a představitelem hlavní role Roman Luknár (momentálně hraje v seriálu ČT Neviditelní). Marián Labuda v roli otce byl za herecký výkon ve vedlejší roli oceněn Českým lvem.',
+		premiera: '2024-11-10',
+	},
 ]
+
+const filmList = document.querySelector("#seznam-filmu")
+filmList.innerHTML = ``
+
+filmy.forEach((film) => {
+  filmList.innerHTML += `
+  <div class="col">
+    <div class="card">
+      <img
+        src="${film.plakat.url}"
+        width="${film.plakat.width}"
+        height="${film.plakat.height}"
+        class="card-img-top"
+        alt="plakát"
+      />
+      <div class="card-body">
+        <h5 class="card-title">${film.nazev}</h5>
+        <p class="card-text">${film.ochutnavka}</p>
+        <a href="film.html#${film.id}" class="btn btn-primary">Přehrát</a>
+      </div>
+    </div>
+  </div>
+  `
+})
